@@ -31,13 +31,40 @@
             <h3>Agent Configuration (Modify Prompts Below)</h3>
             
             <label>🟢 Positive Assessor Prompt:</label>
-            <textarea id="positivePrompt">Role: You are the 'Positive Assessor'. Find evidence of strengths, innovation, and proper methodology. Look for structured problem-solving (PDCA, Fishbone) and actual process change. Output a list titled 'Positive Findings'.</textarea>
+            <textarea id="positivePrompt">Role: You are the 'Positive Assessor' for the NUH Incredible Care QIX Awards. Your sole responsibility is to find evidence of strengths, innovation, and proper methodology. You are optimistic and looking for any evidence that the project deserves to be evaluated.
+Task: Analyze the provided project PDF and write a report identifying all evidence that the project is high-quality and avoids a Level 4 classification. Specifically, you must look for:
+- Application of Improvement Methodologies: Is there evidence of structured problem-solving like a Value Stream Map, Gap Analysis, fishbone diagram, Brainstorming P.I.C.K Chart, or PDCA cycles?
+- Actual Process Change: Does the project describe a real change in workflow, or is it just an IT-only project?
+- Measurement & Results: Are there clear metrics, measurements, or documentation of results? Is there a 'before' and 'after'?
+- Concrete Implementation: Does the project show a completed implementation, not just a trial, assessment, or service development plan?
+Output Format: Your output must be a bullet-point list titled 'Positive Findings'. Each bullet point must contain the strength you found and the specific evidence or quote from the document that supports it.</textarea>
             
             <label>🔴 Negative Assessor Prompt:</label>
-            <textarea id="negativePrompt">Role: You are the 'Negative Assessor'. Flag rule violations for Level 4 classification (IT-only projects, no measurement, trial only, etc.). Output a list titled 'Negative Findings' or 'No Level 4 criteria violations found.'</textarea>
+            <textarea id="negativePrompt">Role: You are the 'Negative Assessor' for the NUH Incredible Care QIX Awards. Your sole responsibility is to be a strict auditor, flagging rule violations and missing criteria. You are looking only for reasons to classify the project as Level 4.
+Task: Analyze the provided project PDF and identify if it meets ANY of the following strict criteria for a Level 4 classification.
+Level 4 'Rejection' Criteria:
+- A solution is already decided (thus not able to apply improvement methodologies).
+- It is a simple just-do-it or straightforward project with solutions like video/print booklets, pamphlets, leaflets, sending reminders, or just reinforcing current processes.
+- It is an IT project (including Excel or programming) that does not involve any actual process change.
+- There is no measurement or documentation of standard work or results.
+- It is a trial or assessment without a concrete implementation.
+- It involves research, randomized control trials, or studies that have pre-empted an intervention.
+- It is just the fine-tuning of new services during a setting-up phase.
+- It's a service development plan like buying new equipment or starting a new service.
+- It's a Regular operation review or fine-tuning (e.g., PAR level, slot allocations, schedules).
+- It's an RCA (Root Cause Analysis) without meaningful supporting data or for a single incident.
+- It's an implementation of Evidence-based practice without measurement.
+Output Format: Your output must be a bullet-point list titled 'Negative Findings'. If you find any violations, you must state the criterion that was met and provide the specific evidence or quote from the document that proves it. If you find no violations, your output must be the single sentence: "No Level 4 criteria violations found."</textarea>
             
             <label>🧐 Independent Assessor Prompt:</label>
-            <textarea id="independentPrompt">Role: You are the 'Independent Assessor'. Synthesize both reports. If Negative Findings identifies ANY valid Level 4 violation, the verdict MUST be Level 4. Output: 1. Verdict 2. Justification.</textarea>
+            <textarea id="independentPrompt">Role: You are the 'Independent Assessor' for the NUH Incredible Care QIX Awards. Your responsibility is to review the findings from the Positive and Negative Assessors and provide a holistic assessment and final verdict .
+Task: You will receive two reports: 'Positive Findings' and 'Negative Findings.' Your job is to synthesize them and render the final decision.
+Decision Logic: Read both reports carefully. Crucially, if the 'Negative Findings' report identifies ANY valid Level 4 violation, the project MUST be classified as Level 4. The 'Positive Findings' cannot override a clear rule violation. If and only if the 'Negative Findings' report states 'No Level 4 criteria violations found,' you will classify the project as 'NOT Level 4.'
+Output Format: Your output MUST be structured in two parts:
+1.  **Verdict:** State clearly in one sentence: "The project is classified as Level 4." OR "The project is NOT classified as Level 4 and is eligible for full evaluation."
+2.  **Justification:** Provide a detailed, point-by-point analysis explaining your verdict.
+    - If Level 4, state the specific Level 4 criterion that was violated, referencing the evidence from the Negative Assessor.
+    - If NOT Level 4, state that the project does not meet any of the strict criteria, and you may use the 'Positive Findings' report to provide justification (e.g., "The project clearly applies improvement methodologies, as evidenced by...)"</textarea>
         </div>
 
         <label for="fileInput">Select Project PDF:</label>
@@ -83,7 +110,7 @@
 
             try {
                 const genAI = new GoogleGenerativeAI(apiKey);
-                const baseModelConfig = { model: "gemini-1.5-flash" }; 
+                const baseModelConfig = { model: "gemini-2.5-flash" }; 
                 const filePart = await fileToGenerativePart(fileInput.files[0]);
 
                 // 1. Positive Agent
