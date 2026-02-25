@@ -3,12 +3,15 @@ import httpx
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+import re
 
-# 1. Initialize the client
-# Ensure your GEMINI_API_KEY environment variable is set
+# 1. Load the environment variables from the hidden.env file
+load_dotenv()
+
+# 2. Initialize the client (it will securely pull the key from your system)
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
-# 2. Define the exact schema the Extraction Agent must return using Pydantic
 class ProjectExtraction(BaseModel):
     project_title: str = Field(description="The title of the quality improvement project.")
     department: str = Field(description="The hospital department submitting the project.")
@@ -19,12 +22,13 @@ class ProjectExtraction(BaseModel):
     key_results: str = Field(description="Quantitative and qualitative benefits, financial savings, or sustained improvements extracted from text or charts.")
     follow_up_plan: str = Field(description="Plans to sustain the results or spread the implementation to other departments.")
 
-def extract_clinical_project(pdf_url: str) -> ProjectExtraction:
+def extract_clinical_project(local_pdf_path: str) -> ProjectExtraction:
     """
-    Downloads a clinical project submission (PDF) and extracts structured data.
+    Reads a local clinical project submission (PDF) and extracts structured data.
     """
-    # Fetch the raw document bytes
-    doc_data = httpx.get(pdf_url).content
+    # Read the local file in binary mode
+    with open(local_pdf_path, "rb") as file:
+        doc_data = file.read()
 
     prompt = """
     You are the Extraction Agent for a hospital's continuous improvement assessment pipeline.
@@ -33,9 +37,9 @@ def extract_clinical_project(pdf_url: str) -> ProjectExtraction:
     visual elements like charts, graphs, and tables to capture the full scope of the methodologies and results.
     """
 
-    # 3. Generate content using Gemini 2.0 Flash with Structured Outputs
+    # Generate content using Gemini Flash with Structured Outputs
     response = client.models.generate_content(
-        model='gemini-2.0-flash',
+        model="gemini-2.5-flash",
         contents=[
             types.Part.from_bytes(data=doc_data, mime_type='application/pdf'),
             prompt
@@ -43,22 +47,40 @@ def extract_clinical_project(pdf_url: str) -> ProjectExtraction:
         config={
             'response_mime_type': 'application/json',
             'response_schema': ProjectExtraction,
-            'temperature': 0.1 # Keep temperature low for factual extraction
+            'temperature': 0.1 
         },
     )
 
-    # 4. Return the parsed, validated Pydantic object
     return response.parsed
 
-# --- Example Usage ---
 if __name__ == "__main__":
-    # Example URL pointing to a hospital project submission PDF
-    sample_pdf_url = "https://example-hospital.com/submissions/QIX_Diagnostic_Imaging.pdf"
+    input_folder = "./project_test"
+    output_folder = "./extracted_results"
     
-    try:
-        extracted_data = extract_clinical_project(sample_pdf_url)
-        print(f"Project Name: {extracted_data.project_title}")
-        print(f"Department: {extracted_data.department}")
-        print(f"Results Found: {extracted_data.key_results}")
-    except Exception as e:
-        print(f"Extraction failed: {e}")
+    # 1. Create the new folder if it doesn't already exist
+    os.makedirs(output_folder, exist_ok=True)
+    
+    for filename in os.listdir(input_folder):
+        if filename.lower().endswith(".pdf"):
+            local_pdf_path = os.path.join(input_folder, filename)
+            
+            try:
+                # Extract the data
+                extracted_data = extract_clinical_project(local_pdf_path)
+                
+                # 2. Create a proper, safe filename from the extracted project title
+                # Remove characters that are invalid in Windows/Mac filenames
+                safe_title = re.sub(r'[\\/*?:"<>|]', "", extracted_data.project_title)
+                
+                # Limit the filename length just in case the title is extremely long
+                safe_filename = f"{safe_title[:60].strip()}.json"
+                output_path = os.path.join(output_folder, safe_filename)
+                
+                # 3. Save the results into the new folder
+                with open(output_path, "w", encoding="utf-8") as json_file:
+                    json_file.write(extracted_data.model_dump_json(indent=2))
+                    
+                print(f"Successfully saved data from {filename} -> {safe_filename}")
+                
+            except Exception as e:
+                print(f"Error processing {filename}: {e}")

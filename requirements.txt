@@ -1,1 +1,5 @@
 comtypes
+google-genai
+pydantic
+python-dotenv
+httpx

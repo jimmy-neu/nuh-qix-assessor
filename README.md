@@ -12,7 +12,7 @@
     ```
 
 3.  **Install dependencies:**
-    This project uses `comtypes` to control PowerPoint. Install it using the requirements file:
+    Install dependancies using the requirements file:
     ```bash
     pip install -r requirements.txt
     ```

@@ -1,0 +1,20 @@
+{
+  "project_title": "Reducing Arrival to triage wait time for Children's Emergency (R.A.C.E.)",
+  "department": "Children's Emergency",
+  "category": "Process Excellence",
+  "problem_statement": "In the NUH Children's Emergency, the Arrival to Consult time for a paediatric patient is lagging behind MOH's benchmark of 20min (50th percentile) and 60min for 95th percentile. One of the focus areas will be on the transit of patients: from Arrival to Triage, looking into ways to reduce the time to triage for P2 walk-in patients (both Adult and Children), which will accelerate the speed of P2 patients' access to timely treatment, the other area being Triage to Consult. There were also negative feedback from patients related to service level and communications (e.g. updates, next step) from Q1 and Q2 ePES to explore uplifting of service experience, alongside process improvement. In scope: Walk-in patients, P2 Patient journey from Arrival to Consultation (includes temperature screening, registration & triage, also looking into ways to manage service expectations during wait for triage and consultation).",
+  "smart_goals": "Tiered, progressive target for overall 'Arrival to Consult' timing. In 3 months from workshop: 50th percentile: 30 min, 95th percentile: 100 min. In 1 year: 50th percentile: 25 min, 95th percentile: 80 min.",
+  "methodology": [
+    "Value Stream Map",
+    "Gap Analysis",
+    "P.I.C.K Chart",
+    "Workflow Redesign",
+    "PAC Escalation Workflow",
+    "QMS Q Ticket Machine + QMS system",
+    "Patient Journey Signage",
+    "Surge Workflow",
+    "Test Run and Review"
+  ],
+  "key_results": "Overall, the CE P2 Arrival-to-Consult time has significantly improved and has been sustained for a total of 18 months, meeting all targets (3-month targets: 50th percentile: 30 min, 95th percentile: 100 min; 1-year targets: 50th percentile: 25 min, 95th percentile: 80 min). The Children's Emergency overall ePES score has also seen a significant improvement since the start of the Improvement Sprint and has remained stable in the 90s range, achieving the NUH Target. Additionally, unprecedented high scores >95% were seen in 2024 and 2025. Caregiver feedback indicated 90% improvement to existing patient journey and 100% support. Time savings showed a current state average (50th percentile) of arrival to end of triage time = 15 mins, rapid experimentation average of arrival to end of triage time = 6 mins, representing a reduction of 60%.",
+  "follow_up_plan": "Audit Checks: Continuous Improvement (use insights from monitoring and analysis to implement changes), Analysis (analyse collected data to understand factors). Presentations: Regular Updates (review and update team on process/guideline changes), Feedback (establish channels for staff feedback). Communications: Effective communication with internal and external stakeholders. Staff: Encouragement of Best Practices (celebrating successes). As part of continuous improvement, materials were systematically updated and fine-tuned. Enhanced wayfinding system with additional directional signages at P3 Triage waiting area. Improved visitor navigation with easily recognisable symbols (starfish markers) on the Emergency Department floor premises."
+}
