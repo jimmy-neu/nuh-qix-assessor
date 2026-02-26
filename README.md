@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## 🤖 Pipeline Architecture
 
-The system operates via two specialized agents to bridge the gap between unstructured clinical data and formal auditing logic.
+The system operates via two specialized agents to bridge the gap between unstructured clinical data and formal auditing logic. (Note: For conversion of pptx file into pdf file use PPTX_PDF.py just need to change the folder path)
 
 ### 1. Extraction Agent
 
