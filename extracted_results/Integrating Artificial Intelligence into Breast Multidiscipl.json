@@ -1,0 +1,18 @@
+{
+  "project_title": "Integrating Artificial Intelligence into Breast Multidisciplinary Tumor Board",
+  "department": "Surgery/ Academic Information Office",
+  "category": "Process Excellence",
+  "problem_statement": "The Breast Multi-disciplinary Tumor Board (MTB) meeting is held weekly, 52 times per year, with a surge in patient load from 35-55 to 50-70 patients per week. Proper documentation and accuracy of MTB discussions are vital. Medical Officers (MOs) spend 10-16 hours per week preparing case summaries on top of patient care, and there is too much redundancy and administrative tasks in the process of listing patients for discussions. The current process involves significant manual effort in data collection and synthesis, leading to inefficiencies and potential delays.",
+  "smart_goals": "To enhance the workflow processes of Breast Multi-disciplinary Tumor Board meeting within NUH by leveraging AI tools for data visualization and simplifying workflow processes in 6 months. To reduce the total man-hour of Medical Officer (MO) in preparing the case summaries for MTB meeting. To reduce the time and steps of tracing histology results for clinicians and breast care nurses (BCNs). To better assist clinicians/nurses/coordinators in identifying benign vs cancer positive patients at one glance and segregating patients into different parts of meeting discussions.",
+  "methodology": [
+    "PDCA (Plan-Do-Check-Act) Cycle",
+    "Gap Analysis",
+    "Root Cause Analysis (Ishikawa/Fishbone-like diagram)",
+    "Program Development and Dashboard Construction",
+    "Data Validation",
+    "Platform Access Testing and Feedback",
+    "Continuous Feedback and Refinement"
+  ],
+  "key_results": "Quantitative benefits include 100% accuracy in summarization, 100% functional reliability, 60% reduction in junior time, 30% reduction in coordinator time, 80% improved research readiness, and 80% longitudinal tracking. Qualitative benefits include successfully automated post-op cases, eliminating manual listing; built-in coding to auto-populate latest imaging and histology reports with a refresh option; simplified documentation to include only essential information; essential information contained in one platform, reducing patient toggling; easy identification of benign vs malignant cases at a glance; real-time data updates; and reduced administrative tasks such as email sending and file duplication. User feedback indicated systematic information reflection, clear data display during meetings, reduced case preparation time, and improved ability to view clinical history, radiological reports, and biopsy histology in one interface.",
+  "follow_up_plan": "Introduce the new system to clinicians, MOs (monthly rotation), nurses, and coordinators involved in breast care, incorporating information into MO hand-over material. Establish the AI-integrated workflow as a standard model of care within the breast surgical division and across different disciplines. A back-end team will support system running and maintenance, with continuous improvement in dashboard automation and visualization. Efforts will be made to achieve dashboard account access for all MOs and shorten approval and account implementation times. Findings will be shared with other departments for possible adoption, with plans to expand and standardize across all tumor boards within NCIS. A back-end team will provide troubleshooting support for access, login, and listing discrepancies. Regular audit checks will be conducted to obtain user feedback and track outcomes. A contingency plan will be in place for system downtime."
+}
