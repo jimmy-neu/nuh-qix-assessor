@@ -1,18 +1,102 @@
-# nuh-qix-assessor
-## Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/jimmy-neu/nuh-qix-assessor.git](https://github.com/jimmy-neu/nuh-qix-assessor.git)
-    ```
+# NUH-QIX Assessor 🏥
 
-2.  **Navigate to the project folder:**
-    ```bash
-    cd nuh-qix-assessor
-    ```
+An automated pipeline for clinical project assessment 
 
-3.  **Install dependencies:**
-    Install dependancies using the requirements file:
-    ```bash
-    pip install -r requirements.txt
-    ```
+## 📌 Overview
+
+The **NUH-QIX Assessor** is designed to streamline the evaluation of clinical project submissions. It replaces manual, error-prone reviews with a deterministic, agentic workflow that ensures every project meets the hospital's "Level 4" rigorous standards before reaching human judges.
+
+---
+
+## 🚀 Installation
+
+Ensure you have Python 3.9+ installed, then run the following commands:
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/jimmy-neu/nuh-qix-assessor.git](https://github.com/jimmy-neu/nuh-qix-assessor.git)
+
+```
+
+2. **Navigate to the project folder:**
+```bash
+cd nuh-qix-assessor
+
+```
+
+
+3. **Install dependencies:**
+```bash
+pip install -r requirements.txt
+
+```
+
+
+
+---
+
+## 🤖 Pipeline Architecture
+
+The system operates via two specialized agents to bridge the gap between unstructured clinical data and formal auditing logic.
+
+### 1. Extraction Agent
+
+The **Extraction Agent** utilizes Vision-Language Models (VLM) to ingest PDFs or slide decks. It maps unstructured text and charts into a strictly defined JSON schema.
+
+* **Why this matters:** Direct LLM processing of complex PDFs often results in "logical drift" or numerical hallucinations.
+* **Outcome:** Converts clinical narratives into deterministic facts.
+
+#### Sample JSON Output:
+
+```json
+{
+  "project_title": "Increasing Clinically Appropriate Contrast-enhanced MRIs (CE MRI) in CKD 4 Patients",
+  "department": "Department of Diagnostic Imaging",
+  "category": "Process Excellence",
+  "problem_statement": "There were limited safe contrast-enhanced imaging options for CKD 4 patients in NUH, leading to the historical avoidance of Contrast-enhanced MRIs (CE MRI) due to concerns about Nephrogenic Systemic Fibrosis (NSF) with older-generation gadolinium-based contrast agents (GBCAs). This occurred despite updated guidelines from the American College of Radiology (ACR) in 2020 and 2024 stating that current-generation GBCAs used in NUH pose minimal risk of NSF for CKD 4 patients, making CE MRI a safer and more appropriate option.",
+  "smart_goals": "To increase the proportion of clinically appropriate Contrast-enhanced MRIs (CE MRIs) in CKD 4 patients from a pre-intervention median of 6.7% to 30% within the next 6 months.",
+  "methodology": [
+    "Gap Analysis",
+    "Value Stream Map",
+    "Workflow Creation",
+    "Education/Training",
+    "Standardized Counselling Template",
+    "Radiologist Roster Management",
+    "System Reminders (EPIC)"
+  ],
+  "key_results": "The proportion of clinically appropriate Contrast-enhanced MRIs (CE MRIs) in CKD 4 patients increased from a pre-intervention median of 6.7% to a post-intervention median of 24%. Benefits include increased patient satisfaction, reduced patient re-visits, increased clinician diagnostic confidence, reduced resource utilization (hospital beds, scan slots, outpatient clinic slots), and cost savings. Specific cost savings include $70.8 saved per patient per month from reaching diagnosis and reducing follow-up, and $100-$133.3 saved per patient per month by avoiding further investigation with alternative modalities (e.g., Outpatient MRI: $800, Percutaneous biopsy: $400, PET-CT: $1600, Repeat clinic visit: $50).",
+  "follow_up_plan": "The plan includes the eventual inclusion of both CKD 4 and CKD 5 patients, with a goal to reconvene with the Nephrology department in 1H 2026 with data. The established workflow can also be introduced to AH and NTFGH diagnostic imaging departments in the future."
+}
+
+```
+
+### 2. Pre-screening Agent
+
+The **Pre-screening Agent** acts as an automated gatekeeper. It audits the extracted JSON and the project file together against specific **Level 4 exclusionary criteria** (e.g., filtering out pre-decided interventions or simple IT-only changes).
+
+#### Terminal Output Examples:
+
+**✅ Eligible Project:**
+
+```bash
+> python Pre_Screening_agent.py
+Starting Pre-Screening Audit...
+✅ ELIGIBLE: Project meets baseline requirements for judging.
+
+```
+
+**❌ Ineligible Project (Level-4 Violation):**
+
+```bash
+> python Pre_Screening_agent.py
+Starting Pre-Screening Audit...
+❌ INELIGIBLE: Level-4 Violation Detected: A solution is already decided.
+
+Audit Details:
+- A solution is already decided (thus not able to apply improvement methodologies).: 🚩 VIOLATION
+  Evidence: The project title is "Integrating Artificial Intelligence into Breast Multidisciplinary Tumor Board". The project's goal, as stated on page 3, is "To enhance the workflow processes of Breast Multi-disciplinary Tumor Board meeting within NUH by leveraging AI tools for data visualization and simplifying workflow processes in 6 months." This explicitly states the solution (leveraging AI tools) as part of the goal, indicating it was decided prior to the application of improvement methodologies to define the solution.
+
+```
+
+---
