@@ -16,20 +16,12 @@ Ensure you have Python 3.9+ installed, then run the following commands:
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/jimmy-neu/nuh-qix-assessor.git](https://github.com/jimmy-neu/nuh-qix-assessor.git)
-
-```
-
 2. **Navigate to the project folder:**
-```bash
-cd nuh-qix-assessor
-
-```
-
-
+    ```bash
+    cd nuh-qix-assessor
 3. **Install dependencies:**
 ```bash
-pip install -r requirements.txt
-
+    pip install -r requirements.txt
 ```
 
 
@@ -97,11 +89,6 @@ Audit Details:
 - A solution is already decided (thus not able to apply improvement methodologies).: 🚩 VIOLATION
   Evidence: The project title is "Integrating Artificial Intelligence into Breast Multidisciplinary Tumor Board". The project's goal, as stated on page 3, is "To enhance the workflow processes of Breast Multi-disciplinary Tumor Board meeting within NUH by leveraging AI tools for data visualization and simplifying workflow processes in 6 months." This explicitly states the solution (leveraging AI tools) as part of the goal, indicating it was decided prior to the application of improvement methodologies to define the solution.
 ```
-Here you go, Grace. I've formatted this section perfectly for your GitHub README.md file, complete with proper headings, bullet points, and syntax highlighting for the code blocks.
-
-You can copy and paste everything inside the block below directly into your markdown file:
-
-Markdown
 ### 3. Grading Agent (Multi-Agent Debate)
 
 The final stage employs a **Multi-Agent Debate Architecture** using multimodal AI (processing both the raw PDF and structured JSON simultaneously). 
