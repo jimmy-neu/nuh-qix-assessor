@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## 🤖 Pipeline Architecture
 
-The system operates via two specialized agents to bridge the gap between unstructured clinical data and formal auditing logic. (Note: For conversion of pptx file into pdf file use PPTX_PDF.py just need to change the folder path)
+The system operates via multiple specialized agents to bridge the gap between unstructured clinical data and formal auditing logic. (Note: For conversion of pptx file into pdf file use PPTX_PDF.py just need to change the folder path)
 
 ### 1. Extraction Agent
 
@@ -96,7 +96,61 @@ Starting Pre-Screening Audit...
 Audit Details:
 - A solution is already decided (thus not able to apply improvement methodologies).: 🚩 VIOLATION
   Evidence: The project title is "Integrating Artificial Intelligence into Breast Multidisciplinary Tumor Board". The project's goal, as stated on page 3, is "To enhance the workflow processes of Breast Multi-disciplinary Tumor Board meeting within NUH by leveraging AI tools for data visualization and simplifying workflow processes in 6 months." This explicitly states the solution (leveraging AI tools) as part of the goal, indicating it was decided prior to the application of improvement methodologies to define the solution.
+```
+Here you go, Grace. I've formatted this section perfectly for your GitHub README.md file, complete with proper headings, bullet points, and syntax highlighting for the code blocks.
 
+You can copy and paste everything inside the block below directly into your markdown file:
+
+Markdown
+### 3. Grading Agent (Multi-Agent Debate)
+
+The final stage employs a **Multi-Agent Debate Architecture** using multimodal AI (processing both the raw PDF and structured JSON simultaneously). 
+
+This ensures that the "Outstanding" (85+) tier remains highly exclusive. By shifting the burden of proof, the system forces the AI to find undeniable, cited evidence for every rubric requirement before awarding high marks.
+
+* **Positive Assessor (Defense):** Actively searches the documents to highlight strengths, locate charts, and argue for maximum points.
+* **Negative Assessor (Prosecution):** Acts as a ruthless auditor. It actively attacks vague claims, looks for missing long-term data, and penalizes subjective statements.
+* **Independent Judge:** Weighs the debate against the exact hospital rubric. It defaults to lower scores ("Meet Expectations") unless the Defense provides flawless, extracted evidence.
+
+#### Terminal Output
+
+```bash
+> python Grading_agent.py
+Starting Multi-Agent Grading for: Reducing Arrival to triage wait time for Children's Emergency (R.A.C.E.)
+Uploading C:\...\22. Reducing Arrival to triage wait time for Children's Emergency (R.A.C.E.) by Kyi Kyi copy.pdf to Gemini...
+
+PDF Uploaded Successfully!
+-> Positive Assessor (Defense) analyzing...
+-> Negative Assessor (Prosecution) analyzing...
+-> Independent Judge finalizing scores...
+
+✅ Assessment Complete! Final Score: 76/100 (Merit)
+Cleaning up PDF from Gemini servers...
+Cleanup successful.
 ```
 
----
+Sample Graded Output (JSON)
+The output provides granular transparency, explaining exactly why a project lost points due to the Skeptic agent's findings.
+
+```json
+{
+  "assessments": [
+    {
+      "category": "4. Problem Analysis",
+      "max_score": 20,
+      "ai_score": 12,
+      "ai_justification": "The project applied appropriate lean/PDCA tools (Value Stream Map, P.I.C.K Chart), meeting 'Meet Expectations'. However, the Fishbone diagram lists many potential causes but lacks data-driven prioritization (e.g., Pareto analysis) to confirm which of these are the *main* bottlenecks. As the Skeptic correctly points out, without such evidence, these remain hypotheses rather than 'well identified' root causes, preventing an 'Above Expectations' score.",
+      "extracted_quote": "C. Problem Analysis (PLAN) Value Stream Map (PDF Page 4)... Brainstorming P.I.C.K Chart (PDF Page 6)."
+    },
+    {
+      "category": "6. Benefits / Results",
+      "max_score": 30,
+      "ai_score": 20,
+      "ai_justification": "Benefits are quantified (wait times, ePES scores) and sustained for 18 months. However, the rubric explicitly asks: 'Are dips explained?'. The 'ED Arrival to Consult Wait Time' chart (PDF Page 8) shows significant fluctuations and dips in performance post-implementation that are not explained in the text. This lack of explanation undermines the claim of truly *consistent* sustained results required for 'Above Expectations'.",
+      "extracted_quote": "Overall, the CE P2 Arrival-to-Consult time has significantly improved and has been sustained for a total of 18 months. (PDF Page 8)"
+    }
+  ],
+  "total_score": 76,
+  "label": "Merit"
+}
+```
